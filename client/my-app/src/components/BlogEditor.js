@@ -66,12 +66,12 @@ const BlogEditor = () => {
     try {
       await axios.post(`${API_URL}/save`, payload);
       lastSavedData.current = { title, content, tags: tags.trim() };
-      setAutosaveMessage("✅ Draft autosaved");
+      setAutosaveMessage(" Draft autosaved");
 
       setTimeout(() => setAutosaveMessage(""), 3000);
     } catch (err) {
       console.error("Autosave failed:", err.response?.data || err.message);
-      setAutosaveMessage("⚠️ Autosave failed");
+      setAutosaveMessage(" Autosave failed");
       setTimeout(() => setAutosaveMessage(""), 3000);
     }
   };

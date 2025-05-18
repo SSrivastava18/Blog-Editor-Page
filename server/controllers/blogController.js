@@ -17,7 +17,7 @@ exports.saveDraft = async (req, res) => {
       title,
       content,
       tags: parseTags(tags),
-      status: status || "draft", // ✅ allow frontend to send draft or fallback to draft
+      status: status || "draft", //  allow frontend to send draft or fallback to draft
     };
 
     const blog = id

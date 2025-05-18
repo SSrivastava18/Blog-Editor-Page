@@ -9,7 +9,7 @@ const {
 
 const router = express.Router();
 
-// Save or update a draft (status should be passed in payload)
+// Save or update a draft 
 router.post("/save", saveDraft);
 
 // Publish a new blog or convert draft to published
