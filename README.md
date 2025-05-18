@@ -30,7 +30,7 @@ A full-featured **Blog Editor** application built with the **MERN stack** (Mongo
 - **CORS**, **dotenv**, and **body-parser**
 
 Clone the Repository
-    git clone https://github.com/your-username/mern-blog-editor.git
+    git clone https://github.com/SSrivastava18/Blog-Editor-Page.git
     cd mern-blog-editor
 
 ## Backend Setup
