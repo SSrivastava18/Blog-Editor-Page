@@ -6,6 +6,7 @@ const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [expandedIds, setExpandedIds] = useState([]);
 
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api/blogs";
@@ -48,6 +49,12 @@ const BlogList = () => {
     }
   };
 
+  const toggleExpand = (id) => {
+    setExpandedIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
   const drafts = blogs.filter((b) => b.status === "draft");
   const published = blogs.filter((b) => b.status === "published");
 
@@ -72,59 +79,91 @@ const BlogList = () => {
       </div>
     );
 
-  const renderCard = (b) => (
-    <div
-      key={b._id}
-      style={{
-        backgroundColor: "#fff",
-        border: "1px solid #e0e0e0",
-        borderRadius: "12px",
-        padding: "18px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        transition: "transform 0.2s ease, box-shadow 0.2s ease",
-        cursor: "pointer"
-      }}
-    >
-      <h3 style={{ marginBottom: "8px", color: "#222" }}>{b.title}</h3>
-      <p style={{ color: "#555", fontSize: "0.95em" }}>
-        {b.content.length > 100 ? b.content.slice(0, 100) + "..." : b.content}
-      </p>
-      <small style={{ display: "block", marginTop: "10px", color: "#888" }}>
-        Status: {b.status} • {new Date(b.updatedAt).toLocaleString()}
-      </small>
-      {renderTags(b.tags)}
-      <div style={{ marginTop: "14px", display: "flex", gap: "10px" }}>
-        <button
-          onClick={() => handleEdit(b)}
-          style={{
-            padding: "6px 14px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#007BFF",
-            color: "#fff",
-            fontWeight: "500",
-            cursor: "pointer"
-          }}
-        >
-          ✏️ Edit
-        </button>
-        <button
-          onClick={() => handleDelete(b._id)}
-          style={{
-            padding: "6px 14px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#DC3545",
-            color: "#fff",
-            fontWeight: "500",
-            cursor: "pointer"
-          }}
-        >
-          🗑️ Delete
-        </button>
+  const getPreview = (content, id) => {
+    const wordLimit = 50;
+    const words = content.split(" ");
+    const isExpanded = expandedIds.includes(id);
+
+    if (words.length <= wordLimit || isExpanded) {
+      return content;
+    }
+
+    return words.slice(0, wordLimit).join(" ") + " ...";
+  };
+
+  const renderCard = (b) => {
+    const isExpanded = expandedIds.includes(b._id);
+
+    return (
+      <div
+        key={b._id}
+        style={{
+          backgroundColor: "#fff",
+          border: "1px solid #e0e0e0",
+          borderRadius: "12px",
+          padding: "18px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+          cursor: "default"
+        }}
+      >
+        <h3 style={{ marginBottom: "8px", color: "#222" }}>{b.title}</h3>
+        <p style={{ color: "#555", fontSize: "0.95em", whiteSpace: "pre-line" }}>
+          {getPreview(b.content, b._id)}
+        </p>
+        {b.content.split(" ").length > 50 && (
+          <button
+            onClick={() => toggleExpand(b._id)}
+            style={{
+              marginTop: "10px",
+              padding: "4px 10px",
+              backgroundColor: "#f0f0f0",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+              fontSize: "0.85em"
+            }}
+          >
+            {isExpanded ? "Show Less ▲" : "Read More ▼"}
+          </button>
+        )}
+        <small style={{ display: "block", marginTop: "10px", color: "#888" }}>
+          Status: {b.status} • {new Date(b.updatedAt).toLocaleString()}
+        </small>
+        {renderTags(b.tags)}
+        <div style={{ marginTop: "14px", display: "flex", gap: "10px" }}>
+          <button
+            onClick={() => handleEdit(b)}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "8px",
+              border: "none",
+              backgroundColor: "#007BFF",
+              color: "#fff",
+              fontWeight: "500",
+              cursor: "pointer"
+            }}
+          >
+            ✏️ Edit
+          </button>
+          <button
+            onClick={() => handleDelete(b._id)}
+            style={{
+              padding: "6px 14px",
+              borderRadius: "8px",
+              border: "none",
+              backgroundColor: "#DC3545",
+              color: "#fff",
+              fontWeight: "500",
+              cursor: "pointer"
+            }}
+          >
+            🗑️ Delete
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   if (loading) return <p style={{ padding: "24px" }}>⏳ Loading blogs...</p>;
   if (error) return <p style={{ color: "red", padding: "24px" }}>{error}</p>;
@@ -140,7 +179,20 @@ const BlogList = () => {
         }}
       >
         <h1 style={{ fontSize: "1.8rem", color: "#333" }}>📚 Blog Dashboard</h1>
-       
+        <button
+          onClick={handleNewBlog}
+          style={{
+            padding: "8px 16px",
+            borderRadius: "8px",
+            backgroundColor: "#28a745",
+            color: "#fff",
+            fontWeight: "600",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
+          ➕ New Blog
+        </button>
       </div>
 
       <section style={{ marginBottom: "40px" }}>
