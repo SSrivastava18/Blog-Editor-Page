@@ -1,8 +1,8 @@
-# 📝 MERN Blog Editor
+#  MERN Blog Editor
 
 A full-featured **Blog Editor** application built with the **MERN stack** (MongoDB, Express.js, React.js, Node.js). This app allows users to create, auto-save, edit, delete, and publish blog posts with an intuitive and responsive user interface.
 
-## 🚀 Features
+##  Features
 
 - Create and edit blogs with:
   - Title input
@@ -16,7 +16,7 @@ A full-featured **Blog Editor** application built with the **MERN stack** (Mongo
 - **Delete** blogs
 - Notifications for save and update events
 
-## 🧰 Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **React.js**
