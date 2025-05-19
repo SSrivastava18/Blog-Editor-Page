@@ -80,7 +80,7 @@ const BlogList = () => {
     );
 
   const getPreview = (content, id) => {
-    const wordLimit = 50;
+    const wordLimit = 20;
     const words = content.split(" ");
     const isExpanded = expandedIds.includes(id);
 

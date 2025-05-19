@@ -11,7 +11,7 @@ export default function App() {
       <h1>📝 Blog Editor</h1>
 
       <nav style={{ marginBottom: "30px", display: "flex", gap: "12px" }}>
-  <Link
+  {/* <Link
     to="/editor"
     style={{
       textDecoration: "none",
@@ -28,7 +28,7 @@ export default function App() {
     onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#28a745")}
   >
     ➕ New Blog
-  </Link>
+  </Link> */}
 
   <Link
     to="/"
