@@ -38,8 +38,8 @@ Clone the Repository
     npm install
 
    Create a .env file inside server/:
-       PORT=5000
-       MONGO_URI=mongodb+srv://saurabh14srivas:zPCyK7g4PLoOUMtL@cluster0.dmkxlo5.mongodb.net/blogDB?retryWrites=true&w=majority&appName=Cluster0
+       PORT= Your own port number.
+       MONGO_URI=Your own mongo atlas uri.
 
    Start the server:
        npm run dev
